@@ -5,12 +5,18 @@ class RolesController < ApplicationController
 
   def show
     @role = Role.find(params[:id])
+    render("/roles/show.html.erb")
   end
 
   def new_form
+     render("/roles/new_form.html.erb")
   end
 
   def create_row
+     #Parameters > :character_name = "text"
+     # =>          :movie_id = "###"
+     # =>          :actor_id = "###"
+
     @role = Role.new
     @role.character_name = params[:character_name]
     @role.movie_id = params[:movie_id]

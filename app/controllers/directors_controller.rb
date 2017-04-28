@@ -6,43 +6,60 @@ class DirectorsController < ApplicationController
 
   def show
     @director = Director.find(params[:id])
+    render("/directors/show.html.erb")
   end
 
-  def new
+  def new_form
+     render("/directors/new_form.html.erb")
   end
 
   def create_row
-    @director = Director.new
-    @director.dob = params[:dob]
-    @director.name = params[:name]
-    @director.bio = params[:bio]
-    @director.image_url = params[:image_url]
+     #Parameters > :dob = "Month DD, YYYY"
+     # =>          :name = "text"
+     # =>          :bio = "text"
+     # =>          :image_url = "URL"
 
-    @director.save
+    director = Director.new
+    director.dob = params[:dob]
+    director.name = params[:name]
+    director.bio = params[:bio]
+    director.image_url = params[:image_url]
 
-    render("show")
+    director.save
+
+    redirect_to("/directors/#{director.id}")
   end
 
   def edit_form
     @director = Director.find(params[:id])
+    render("/directors/edit_form.html.erb")
   end
 
   def update_row
-    @director = Director.find(params[:id])
+     #Parameters > :id = "###"
+     # =>          :dob = "Month DD, YYYY"
+     # =>          :name = "text"
+     # =>          :bio = "text"
+     # =>          :image_url = "URL"
 
-    @director.dob = params[":dob"]
-    @director.name = params[":name"]
-    @director.bio = params[":bio"]
-    @director.image_url = params[":image_url"]
+    director = Director.find(params[:id])
 
-    @director.save
+    director.dob = params[:the_dob]
+    director.name = params[:the_name]
+    director.bio = params[:the_bio]
+    director.image_url = params[:the_image_url]
 
-    render("show")
+    director.save
+
+    redirect_to("/directors/#{params[:id]}")
   end
 
   def destroy
+     #Parameters > :id = "###"
     @director = Director.find(params[:id])
 
     @director.destroy
+
+    render("/directors/destroy.html.erb")
   end
 end
